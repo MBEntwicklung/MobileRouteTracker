@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @position.account %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @position.lat %>
+</p>
+
+<p>
+  <b>Lng:</b>
+  <%= @position.lng %>
+</p>
+
+<p>
+  <b>Created:</b>
+  <%= @position.created %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @position.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_position_path(@position) %> |
+<%= link_to 'Back', positions_path %>
