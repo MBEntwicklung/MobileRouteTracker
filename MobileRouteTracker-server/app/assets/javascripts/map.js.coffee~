@@ -1,0 +1,24 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+
+        // OpenStreetMap einsetzen
+        map = new OpenLayers.Map("map");
+        map.addLayer(new OpenLayers.Layer.OSM());
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+ 
+<% @positions.each do |position| %>
+        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= position.lat %>, <%= position.lng %>)));
+<% end %>
+ 
+        //Set start centrepoint and zoom    
+        var lonLat = new OpenLayers.LonLat(10.1953125, 51.1021425621)
+            .transform(
+                new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                map.getProjectionObject() // to Spherical Mercator Projection
+            );
+        var zoom=5;
+        map.setCenter (lonLat, zoom);  
+

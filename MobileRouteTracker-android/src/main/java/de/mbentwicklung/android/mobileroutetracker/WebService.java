@@ -36,7 +36,7 @@ public class WebService {
 
 	private static final String CONTENT_TYPE_JSON = "application/json";
 
-	private final static String WEB_SERVICE_URL = "http://192.168.2.103:3000/points.json";
+	private final static String WEB_SERVICE_URL = "http://dhost23.bonn-local.de:3000/webservice/position/1/1";
 
 	private DefaultHttpClient httpClient;
 

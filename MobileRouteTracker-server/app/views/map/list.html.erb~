@@ -1,0 +1,4 @@
+<% @positions.each do |position| %>
+<%= position.lat %> <%= position.lng %>
+<% end %>
+

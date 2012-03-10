@@ -4,6 +4,7 @@ MobileRouteTrackerServer::Application.routes.draw do
   resources :accounts
 
   match 'map/:accountnr/:pass' => 'map#index'
+  match 'map/:accountnr/:pass/list' => 'map#list'
   match 'webservice' => 'webservice#index'
   get 'webservice/positions/:accountnr/:pass' => 'webservice#positions'
   post 'webservice/position/:accountnr/:pass' => 'webservice#position'

@@ -1,0 +1,29 @@
+
+<div id="map" style="height:100%; width:100%;" />
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+
+    map = new OpenLayers.Map("map");
+    map.addLayer(new OpenLayers.Layer.OSM());
+
+    var lngLat = new OpenLayers.LonLat(13.41,52.52) // Center of the map
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
+          );
+
+    map.setCenter(lngLat, 2);
+
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+
+ <% @positions.each do |position| %>
+    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= position.lng %>,<%= position.lat %>).transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
+          )));
+<% end %>
+ 
+</script>
+
