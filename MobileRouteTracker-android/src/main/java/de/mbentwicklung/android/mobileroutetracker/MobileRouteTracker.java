@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 /**
  * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
@@ -32,6 +34,20 @@ public class MobileRouteTracker extends Activity {
 		final Button startButton = (Button) findViewById(R.id.button_start);
 		final Button stopButton = (Button) findViewById(R.id.button_stop);
 		final SeekBar timeBar = (SeekBar) findViewById(R.id.timeBar);
+		final TextView timeValue = (TextView) findViewById(R.id.timeValue);
+		
+		timeBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(final SeekBar seekBar) {
+				timeValue.setText("Interval:" + seekBar.getProgress());
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			}
+		});
 
 		startButton.setOnClickListener(new OnClickListener() {
 			@Override

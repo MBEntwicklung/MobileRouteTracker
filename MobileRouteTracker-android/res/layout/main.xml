@@ -9,6 +9,20 @@
         android:layout_height="wrap_content"
         android:text="Welcome to the Mobile Route Tracker." />
 
+    <EditText
+        android:id="@+id/idkey"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px" />
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_margin="10px" >
+    </EditText>
+
     <Button
         android:id="@+id/button_start"
         android:layout_width="fill_parent"
@@ -32,5 +46,11 @@
         android:progress="10"
         android:max="120"
         android:layout_margin="10px" />
+
+    <TextView
+        android:id="@+id/timeValue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Interval: 10" />
 
 </LinearLayout>
