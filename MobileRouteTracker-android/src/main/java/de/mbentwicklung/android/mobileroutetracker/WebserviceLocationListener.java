@@ -22,10 +22,12 @@ public class WebserviceLocationListener implements LocationListener {
 	private static final int MIN_DISTANCE = 1000;
 	
 	private final LocationManager locationManager;
+	private final ConnectionSetting connectionSetting;
 	
-	public WebserviceLocationListener(LocationManager locationManager) {
+	public WebserviceLocationListener(final LocationManager locationManager, final ConnectionSetting connectionSetting) {
 		super();
 		this.locationManager = locationManager;
+		this.connectionSetting = connectionSetting;
 		
 		this.locationManager.requestLocationUpdates(GPS, MIN_TIME_SEC, MIN_DISTANCE, this);
 	}
@@ -39,7 +41,7 @@ public class WebserviceLocationListener implements LocationListener {
 		params.put("lat", location.getLatitude());
 		params.put("lng", location.getLongitude());
 
-		final WebService webService = new WebService();
+		final WebService webService = new WebService(connectionSetting);
 		webService.webInvoke(params);
 
 		Log.i("mobileroutetracker", location.toString() + " registered");

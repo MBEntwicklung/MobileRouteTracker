@@ -36,13 +36,15 @@ public class WebService {
 
 	private static final String CONTENT_TYPE_JSON = "application/json";
 
-	private final static String WEB_SERVICE_URL = "http://dhost23.bonn-local.de:3000/webservice/position/1/1";
-
 	private DefaultHttpClient httpClient;
 
 	private HttpContext httpContext;
+	
+	private final ConnectionSetting connectionSetting;
 
-	public WebService() {
+	public WebService(final ConnectionSetting connectionSetting) {
+		this.connectionSetting = connectionSetting;
+		
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 10000);
@@ -52,7 +54,7 @@ public class WebService {
 
 	public String webInvoke(Map<String, Object> params) {
 		final JSONObject jsonObject = new JSONObject();
-		final HttpPost httpPost = new HttpPost(WEB_SERVICE_URL);
+		final HttpPost httpPost = new HttpPost(connectionSetting.getWebserviceLink());
 		httpPost.setHeader("Accept", ACCEPT);
 		httpPost.setHeader("Content-Type", CONTENT_TYPE_JSON);
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.RFC_2109);
@@ -69,7 +71,7 @@ public class WebService {
 			final StringEntity tmp = new StringEntity(jsonObject.toString(), "UTF-8");
 			httpPost.setEntity(tmp);
 
-			Log.d(LOG_TAG, WEB_SERVICE_URL + "?" + jsonObject.toString());
+			Log.d(LOG_TAG, connectionSetting.getWebserviceLink() + "?" + jsonObject.toString());
 			final HttpResponse httpResponse = httpClient.execute(httpPost, httpContext);
 
 			if (httpResponse != null) {
