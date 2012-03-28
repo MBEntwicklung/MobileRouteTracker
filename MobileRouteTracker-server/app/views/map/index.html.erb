@@ -1,29 +1,21 @@
 
 <div id="map" style="height:100%; width:100%;" />
 
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script type="text/javascript" src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
 <script>
 
     map = new OpenLayers.Map("map");
     map.addLayer(new OpenLayers.Layer.OSM());
 
-    var lngLat = new OpenLayers.LonLat(<%= @positions.last.lng %>, <%= @positions.last.lat %>) // Center of the map
-          .transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
-          );
+    map.setCenter(new OpenLayers.LonLat(12, 50), 10);
 
-    map.setCenter(lngLat, 9);
-
-    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
 
- <% @positions.each do |position| %>
-    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= position.lng %>,<%= position.lat %>).transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
-          )));
+<% @positions.each do |position| %>
+    addMarker(markers, <%= position.lng %>,<%= position.lat %>, "Created: <%= position.created_at.strftime("%d.%m.%Y %H:%M %Z") %>", false, 1);
 <% end %>
- 
+
 </script>
 
