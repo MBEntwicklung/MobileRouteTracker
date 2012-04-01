@@ -93,7 +93,9 @@ public class MobileRouteTracker extends Activity {
 
 	private void stopLocationListener() {
 		alarmManager.cancel(locationSendingService);
-		locationSendingService.cancel();
+		if (locationSendingService != null) {
+			locationSendingService.cancel();
+		}
 	}
 
 	private boolean isLocationSendingServiceRunning() {

@@ -11,8 +11,7 @@ import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 /**
- * @author marc
- * 
+ * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
  */
 public class ComponentManager {
 
@@ -33,6 +32,7 @@ public class ComponentManager {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				setIntervalInTimeValue(progress);
 			}
 		});
 	}
@@ -62,7 +62,7 @@ public class ComponentManager {
 		getRouteIDEditText().setEnabled(false);
 		getRoutePWEditText().setEnabled(false);
 	}
-	
+
 	public int getTime() {
 		return getTimeBar().getProgress();
 	}
@@ -109,4 +109,7 @@ public class ComponentManager {
 		return (EditText) activity.findViewById(R.id.pass);
 	}
 
+	void setIntervalInTimeValue(final int interval) {
+		getTimeValue().setText("Interval: " + interval);
+	}
 }

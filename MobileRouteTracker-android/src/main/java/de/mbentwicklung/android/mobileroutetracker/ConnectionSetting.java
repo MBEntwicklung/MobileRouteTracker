@@ -12,7 +12,7 @@ public class ConnectionSetting {
 
 	private static final String SLASH = "/";
 
-	private final static String WEB_SERVICE_URL = "http://dhost23.bonn-local.de:3000/webservice/position";
+	private final static String WEB_SERVICE_URL = "http://mobile-route-tracker.org/webservice/position";
 
 	private final String eventId;
 	private final String pass;
