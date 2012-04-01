@@ -10,16 +10,16 @@
 
 
 
- function addMarker(layer, lon, lat, popupContentHTML) {
- 
+ function addMarker(map, layer, lon, lat, popupContentHTML) {
+	
 	// Koordinaten in LonLat umwandeln
-	var ll = new OpenLayers.LonLat(lon, lat).transform(
+	var lonlat = new OpenLayers.LonLat(lon, lat).transform(
 		new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 		new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
 	);
 
 	// Feature erstellen und konfigurieren (Popup und Marker)
-	var feature = new OpenLayers.Feature(layer, ll);
+	var feature = new OpenLayers.Feature(layer, lonlat);
 	feature.closeBox = false;
 	feature.popupClass = OpenLayers.Class(OpenLayers.Popup.FramedCloud, {minSize: new OpenLayers.Size(200, 100) } );
 	feature.data.popupContentHTML = popupContentHTML;
@@ -28,9 +28,6 @@
 	// Marker erstellen
 	var marker = feature.createMarker();
  
-	/*
-	 * Handler Funktionen fÃ¼r die Mouse-Events
-	 */
 	// Hover
 	var markerHover = function(evt) {
 		// Wenn das Popup nicht sichtbar ist, dann kann es nicht fest sichtbar sein
@@ -51,18 +48,16 @@
 		OpenLayers.Event.stop(evt);
 	}
 
-	// Events auf den Marker registrieren und als Objekt das Feature Ã¼bergeben
+	// Events auf den Marker registrieren und als Objekt das Feature übergeben
 	marker.events.register("mouseover", feature, markerHover);
 	marker.events.register("mouseout", feature, markerHoverEnd);
 
-	// Erstellten Marker der Ebene hinzufÃ¼gen
+	// Erstellten Marker der Ebene hinzufügen
 	layer.addMarker(marker);
 
-	// Popup erstellen, der Karte hinzufÃ¼gen und anzeigen, falls gewÃ¼nscht
+	// Popup erstellen, der Karte hinzufügen und anzeigen, falls gewünscht
 	map.addPopup(feature.createPopup(feature.closeBox));
 
 	feature.popup.hide();
 	feature.popup.clicked = false;
-
-	return marker;
 }

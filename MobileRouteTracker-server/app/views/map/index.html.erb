@@ -5,16 +5,25 @@
 <script type="text/javascript" src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
 <script>
 
-    map = new OpenLayers.Map("map");
+    var map = new OpenLayers.Map("map");
     map.addLayer(new OpenLayers.Layer.OSM());
 
-    map.setCenter(new OpenLayers.LonLat(12, 50), 10);
+    
+    var center = new OpenLayers.LonLat(<%= @last_position.lng%>, <%= @last_position.lat %>)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+    var zoom=10;
 
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
 
+    map.setCenter(center, zoom);
+
 <% @positions.each do |position| %>
-    addMarker(markers, <%= position.lng %>,<%= position.lat %>, "Created: <%= position.created_at.strftime("%d.%m.%Y %H:%M %Z") %>", false, 1);
+    addMarker(map, markers, <%= position.lng %>,<%= position.lat %>, 
+	"Created: <%= position.created_at.strftime("%d.%m.%Y %H:%M %Z") %>", false);
 <% end %>
 
 </script>

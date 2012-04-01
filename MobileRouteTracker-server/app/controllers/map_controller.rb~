@@ -3,7 +3,7 @@ class MapController < ApplicationController
   def index
     @account = Account.where(:accountnr => params[:accountnr], :pass => params[:pass]).first
     @positions = @account.positions
-    @last_postion = @account.positions.last
+    @last_position = Account.where(:accountnr => params[:accountnr], :pass => params[:pass]).first.positions.first
   end
 
 end
