@@ -14,6 +14,8 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import de.mbentwicklung.android.mobileroutetracker.tracking.LocationTrackingService;
+import de.mbentwicklung.android.mobileroutetracker.webservice.LocationSendingService;
 
 /**
  * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
@@ -25,6 +27,7 @@ public class MobileRouteTracker extends Activity {
 	private AlarmManager alarmManager;
 
 	private PendingIntent locationSendingService;
+	private PendingIntent locationTrackingService;
 
 	private ComponentManager componentManager;
 
@@ -42,7 +45,8 @@ public class MobileRouteTracker extends Activity {
 		componentManager.getStartButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startLocationListener();
+				startSendingService();
+				startTrackingService();
 				componentManager.loadRunState();
 			}
 		});
@@ -50,7 +54,8 @@ public class MobileRouteTracker extends Activity {
 		componentManager.getStopButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				stopLocationListener();
+				stopSendingService();
+				stopTrackingService();
 				componentManager.loadWaitState();
 			}
 		});
@@ -66,10 +71,10 @@ public class MobileRouteTracker extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		stopLocationListener();
+		stopSendingService();
 	}
 
-	private void startLocationListener() {
+	private void startSendingService() {
 
 		final String id = componentManager.getRouteIDEditText().getText().toString();
 		final String pw = componentManager.getRoutePWEditText().getText().toString();
@@ -88,13 +93,34 @@ public class MobileRouteTracker extends Activity {
 		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval,
 				locationSendingService);
 
-		Log.d("mobileroutetracker", "AlarmManager with interval " + interval + " started");
+		Log.d("mobileroutetracker", "LocationSendingService with interval " + interval + " started");
 	}
 
-	private void stopLocationListener() {
+	private void startTrackingService() {
+
+		final Intent service = new Intent(this, LocationTrackingService.class);
+		locationTrackingService = PendingIntent.getService(this, 0, service, 0);
+
+		final long interval = DateUtils.SECOND_IN_MILLIS * componentManager.getTime();
+		final long firstStart = System.currentTimeMillis();
+
+		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval,
+				locationTrackingService);
+
+		Log.d("mobileroutetracker", "LocationTrackingService with interval " + interval + " started");
+	}
+
+	private void stopSendingService() {
 		alarmManager.cancel(locationSendingService);
 		if (locationSendingService != null) {
 			locationSendingService.cancel();
+		}
+	}
+
+	private void stopTrackingService() {
+		alarmManager.cancel(locationTrackingService);
+		if (locationTrackingService != null) {
+			locationTrackingService.cancel();
 		}
 	}
 

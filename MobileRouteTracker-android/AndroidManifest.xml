@@ -18,11 +18,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".LocationSendingService" >
-            <!-- <intent-filter>
-                <action android:name=""/>
-            </intent-filter> -->
-        </service>
+        <service android:name=".webservice.LocationSendingService" />
+        <service android:name=".tracking.LocationTrackingService" />
     </application>
 
 </manifest>
