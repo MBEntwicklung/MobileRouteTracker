@@ -19,20 +19,17 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.mbentwicklung.android.mobileroutetracker.ConnectionSetting;
-
 import android.util.Log;
+import de.mbentwicklung.android.mobileroutetracker.ConnectionSetting;
+import de.mbentwicklung.android.mobileroutetracker.MRTConstants;
 
 /**
  * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
  */
 public class WebService {
-
-	private static final String LOG_TAG = "mobileroutetracker";
 
 	private static final String ACCEPT = "text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
 
@@ -41,12 +38,12 @@ public class WebService {
 	private DefaultHttpClient httpClient;
 
 	private HttpContext httpContext;
-	
+
 	private final ConnectionSetting connectionSetting;
 
 	public WebService(final ConnectionSetting connectionSetting) {
 		this.connectionSetting = connectionSetting;
-		
+
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 10000);
@@ -54,7 +51,7 @@ public class WebService {
 		httpContext = new BasicHttpContext();
 	}
 
-	public String webInvoke(Map<String, Object> params) {
+	public boolean send(Map<String, Object> params) {
 		final JSONObject jsonObject = new JSONObject();
 		final HttpPost httpPost = new HttpPost(connectionSetting.getWebserviceLink());
 		httpPost.setHeader("Accept", ACCEPT);
@@ -65,7 +62,7 @@ public class WebService {
 			try {
 				jsonObject.put(param.getKey(), param.getValue());
 			} catch (JSONException e) {
-				Log.e(LOG_TAG, "JSONException : " + e);
+				Log.e(MRTConstants.LogTags.WS_TAG, "JSONException : " + e);
 			}
 		}
 
@@ -73,20 +70,22 @@ public class WebService {
 			final StringEntity tmp = new StringEntity(jsonObject.toString(), "UTF-8");
 			httpPost.setEntity(tmp);
 
-			Log.d(LOG_TAG, connectionSetting.getWebserviceLink() + "?" + jsonObject.toString());
+			Log.d(MRTConstants.LogTags.WS_TAG, connectionSetting.getWebserviceLink() + "?" + jsonObject.toString());
 			final HttpResponse httpResponse = httpClient.execute(httpPost, httpContext);
 
-			if (httpResponse != null) {
-				return EntityUtils.toString(httpResponse.getEntity());
+			if (httpResponse != null && httpResponse.getStatusLine().getStatusCode() == 200) {
+				Log.d("WS", "sending successful");
+				return true;
 			}
 		} catch (UnsupportedEncodingException e) {
-			Log.e(LOG_TAG, "UnsupportedEncodingException : " + e);
+			Log.e(MRTConstants.LogTags.WS_TAG, "UnsupportedEncodingException : " + e);
 		} catch (ClientProtocolException e) {
-			Log.e(LOG_TAG, "ClientProtocolException : " + e);
+			Log.e(MRTConstants.LogTags.WS_TAG, "ClientProtocolException : " + e);
 		} catch (IOException e) {
-			Log.e(LOG_TAG, "IOException : " + e);
+			Log.e(MRTConstants.LogTags.WS_TAG, "IOException : " + e);
 		}
 
-		return null;
+		Log.d("WS", "sending failure");
+		return false;
 	}
 }

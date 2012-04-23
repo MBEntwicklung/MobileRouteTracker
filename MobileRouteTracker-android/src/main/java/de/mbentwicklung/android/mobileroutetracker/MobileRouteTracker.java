@@ -39,8 +39,8 @@ public class MobileRouteTracker extends Activity {
 		this.componentManager = new ComponentManager(this);
 		this.alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-		componentManager.getRouteIDEditText().setText(getPrefString(LocationSendingService.ID));
-		componentManager.getRoutePWEditText().setText(getPrefString(LocationSendingService.PW));
+		componentManager.getRouteIDEditText().setText(getPrefString(MRTConstants.ID));
+		componentManager.getRoutePWEditText().setText(getPrefString(MRTConstants.PW));
 
 		componentManager.getStartButton().setOnClickListener(new OnClickListener() {
 			@Override
@@ -79,12 +79,12 @@ public class MobileRouteTracker extends Activity {
 		final String id = componentManager.getRouteIDEditText().getText().toString();
 		final String pw = componentManager.getRoutePWEditText().getText().toString();
 
-		setPrefString(LocationSendingService.ID, id);
-		setPrefString(LocationSendingService.PW, pw);
+		setPrefString(MRTConstants.ID, id);
+		setPrefString(MRTConstants.PW, pw);
 
 		final Intent service = new Intent(this, LocationSendingService.class);
-		service.putExtra(LocationSendingService.ID, id);
-		service.putExtra(LocationSendingService.PW, pw);
+		service.putExtra(MRTConstants.ID, id);
+		service.putExtra(MRTConstants.PW, pw);
 		locationSendingService = PendingIntent.getService(this, 0, service, 0);
 
 		final long interval = DateUtils.SECOND_IN_MILLIS * componentManager.getTime();

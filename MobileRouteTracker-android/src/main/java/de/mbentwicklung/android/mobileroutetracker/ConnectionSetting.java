@@ -3,16 +3,14 @@
  */
 package de.mbentwicklung.android.mobileroutetracker;
 
+import de.mbentwicklung.android.mobileroutetracker.webservice.WebLinkFactory;
+
 /**
  * 
  * 
  * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
  */
 public class ConnectionSetting {
-
-	private static final String SLASH = "/";
-
-	private final static String WEB_SERVICE_URL = "http://mobile-route-tracker.org/webservice/position";
 
 	private final String eventId;
 	private final String pass;
@@ -29,6 +27,6 @@ public class ConnectionSetting {
 	 * @return Link zum WebService
 	 */
 	public String getWebserviceLink() {
-		return WEB_SERVICE_URL + SLASH + eventId + SLASH + pass;
+		return WebLinkFactory.createLink(MRTConstants.WEB_SERVICE_URL, eventId, pass);
 	}
 }

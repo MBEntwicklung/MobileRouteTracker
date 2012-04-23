@@ -7,6 +7,9 @@ import android.location.LocationManager;
 import android.os.IBinder;
 import android.util.Log;
 
+/**
+ * @author Marc Bellmann <marc.bellmann@mb-entwicklung.de>
+ */
 public class LocationTrackingService extends Service {
 
 	@Override

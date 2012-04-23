@@ -3,7 +3,6 @@
  */
 package de.mbentwicklung.android.mobileroutetracker.tracking;
 
-
 import de.mbentwicklung.android.mobileroutetracker.cache.Position;
 import de.mbentwicklung.android.mobileroutetracker.cache.PositionCache;
 
@@ -35,11 +34,17 @@ public class CachedLocationListener implements LocationListener {
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
 		this.locationManager.removeUpdates(this);
 
-		final Position position = new Position(0, location.getLongitude(), location.getLatitude(),
-				location.getAltitude(), location.getTime());
+		final Position position = new Position(-1, 
+				location.getLongitude(), 
+				location.getLatitude(),
+				location.getAltitude(), 
+				location.getTime(), 
+				location.getAccuracy(),
+				location.getBearing()
+			);
 
 		Log.d("TC", "cache " + position);
 		this.positionCache.insertNewPosition(position);
