@@ -12,20 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :account %><br />
-    <%= f.text_field :account %>
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
   </div>
   <div class="field">
-    <%= f.label :lat %><br />
-    <%= f.text_field :lat %>
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
   </div>
   <div class="field">
-    <%= f.label :lng %><br />
-    <%= f.text_field :lng %>
+    <%= f.label :altitude %><br />
+    <%= f.text_field :altitude %>
   </div>
   <div class="field">
-    <%= f.label :created %><br />
-    <%= f.datetime_select :created %>
+    <%= f.label :accuracy %><br />
+    <%= f.text_field :accuracy %>
+  </div>
+  <div class="field">
+    <%= f.label :bearing %><br />
+    <%= f.text_field :bearing %>
+  </div>
+  <div class="field">
+    <%= f.label :time %><br />
+    <%= f.datetime_select :time %>
   </div>
   <div class="field">
     <%= f.label :description %><br />

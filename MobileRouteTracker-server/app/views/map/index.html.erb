@@ -9,7 +9,7 @@
     map.addLayer(new OpenLayers.Layer.OSM());
 
     
-    var center = new OpenLayers.LonLat(<%= @last_position.lng%>, <%= @last_position.lat %>)
+    var center = new OpenLayers.LonLat(<%= @last_position.longitude%>, <%= @last_position.latitude %>)
           .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             map.getProjectionObject() // to Spherical Mercator Projection
@@ -22,8 +22,8 @@
     map.setCenter(center, zoom);
 
 <% @positions.each do |position| %>
-    addMarker(map, markers, <%= position.lng %>,<%= position.lat %>, 
-	"Created: <%= position.created_at.strftime("%d.%m.%Y %H:%M %Z") %>", false);
+    addMarker(map, markers, <%= position.longitude %>,<%= position.latitude %>, 
+	"Created: <%= Time.at(position.time / 1000).strftime("%d.%m.%Y %H:%M %Z") %>", false);
 <% end %>
 
 </script>

@@ -7,6 +7,13 @@ class WebserviceController < ApplicationController
   def position
     @account = Account.where(:accountnr => params[:accountnr], :pass => params[:pass]).first
     @position = @account.positions.build
+    @position.lat = params[:latitude]
+    @position.lng = params[:longitude]
+    @position.lat = params[:altitude]
+    @position.lat = params[:accuracy]
+    @position.lat = params[:bearing]
+    @position.lat = params[:time]
+    @position.lat = params[:description]
     @position.save
     render :json => @position
   end

@@ -3,10 +3,13 @@
 <table>
   <tr>
     <th>Account</th>
-    <th>Lat</th>
-    <th>Lng</th>
-    <th>Created</th>
-    <th>Description</th>
+    <th>longitude</th>
+    <th>latitude</th>
+    <th>altitude</th>
+    <th>accuracy</th>
+    <th>bearing</th>
+    <th>time</th>
+    <th>description</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,10 +17,13 @@
 
 <% @positions.each do |position| %>
   <tr>
-    <td><%= position.account %></td>
-    <td><%= position.lat %></td>
-    <td><%= position.lng %></td>
-    <td><%= position.created %></td>
+    <td><%= position.account.id %></td>
+    <td><%= position.longitude %></td>
+    <td><%= position.latitude %></td>
+    <td><%= position.altitude %></td>
+    <td><%= position.accuracy %></td>
+    <td><%= position.bearing %></td>
+    <td><%= position.time %></td>
     <td><%= position.description %></td>
     <td><%= link_to 'Show', position %></td>
     <td><%= link_to 'Edit', edit_position_path(position) %></td>

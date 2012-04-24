@@ -23,9 +23,12 @@ ActiveRecord::Schema.define(:version => 20120309202015) do
 
   create_table "positions", :force => true do |t|
     t.integer  "account_id"
-    t.string   "lat"
-    t.string   "lng"
-    t.datetime "created"
+    t.string   "longitude"
+    t.string   "latitude"
+    t.string   "altitude"
+    t.string   "accuracy"
+    t.string   "bearing"
+    t.datetime "time"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
