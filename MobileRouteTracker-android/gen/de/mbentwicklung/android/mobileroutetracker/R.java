@@ -23,5 +23,12 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f030000;
+        public static final int interval=0x7f030001;
+        public static final int one_hour=0x7f030007;
+        public static final int one_minute=0x7f030004;
+        public static final int ten_minute=0x7f030005;
+        public static final int ten_seconds=0x7f030002;
+        public static final int thirty_minute=0x7f030006;
+        public static final int thirty_seconds=0x7f030003;
     }
 }

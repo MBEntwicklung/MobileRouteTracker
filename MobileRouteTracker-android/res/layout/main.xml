@@ -43,15 +43,12 @@
         android:id="@+id/timeBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:progress="10"
-        android:max="120"
         android:layout_margin="10px" />
 
     <TextView
         android:id="@+id/timeValue"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10px"
-        android:text="Interval: 10" />
+        android:layout_margin="10px"/>
 
 </LinearLayout>

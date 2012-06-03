@@ -21,6 +21,8 @@ public class ComponentManager {
 		super();
 		this.activity = activity;
 
+		getTimeBar().setMax(TimeInterval.values().length - 1);
+		setIntervalInTimeValue(TimeInterval.values()[getTimeBar().getProgress()]);
 		getTimeBar().setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(final SeekBar seekBar) {
@@ -32,7 +34,7 @@ public class ComponentManager {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				setIntervalInTimeValue(progress);
+				setIntervalInTimeValue(TimeInterval.values()[progress]);
 			}
 		});
 	}
@@ -63,8 +65,8 @@ public class ComponentManager {
 		getRoutePWEditText().setEnabled(false);
 	}
 
-	public int getTime() {
-		return getTimeBar().getProgress();
+	public TimeInterval getTimeInterval() {
+		return TimeInterval.values()[getTimeBar().getProgress()];
 	}
 
 	/**
@@ -109,7 +111,9 @@ public class ComponentManager {
 		return (EditText) activity.findViewById(R.id.pass);
 	}
 
-	void setIntervalInTimeValue(final int interval) {
-		getTimeValue().setText("Interval: " + interval);
+	void setIntervalInTimeValue(final TimeInterval interval) {
+		final String text = activity.getText(R.string.interval) + " "
+				+ activity.getText(interval.getStringId());
+		getTimeValue().setText(text);
 	}
 }

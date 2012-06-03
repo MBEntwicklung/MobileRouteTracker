@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MobileRouteTracker</string>
+    
+    <string name="interval">Intervall: </string>
+    <string name="ten_seconds">10 Sekunden</string>
+    <string name="thirty_seconds">30 Sekunden</string>
+    <string name="one_minute">1 Minute</string>
+    <string name="ten_minute">10 Minuten</string>
+    <string name="thirty_minute">30 Minuten</string>
+    <string name="one_hour">1 Stunde</string>
 </resources>

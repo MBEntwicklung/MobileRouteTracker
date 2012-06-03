@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,10 +86,10 @@ public class MobileRouteTracker extends Activity {
 		service.putExtra(MRTConstants.PW, pw);
 		locationSendingService = PendingIntent.getService(this, 0, service, 0);
 
-		final long interval = DateUtils.SECOND_IN_MILLIS * componentManager.getTime();
+		final TimeInterval interval = componentManager.getTimeInterval();
 		final long firstStart = System.currentTimeMillis();
 
-		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval,
+		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval.getTime(),
 				locationSendingService);
 
 		Log.d("mobileroutetracker", "LocationSendingService with interval " + interval + " started");
@@ -101,13 +100,14 @@ public class MobileRouteTracker extends Activity {
 		final Intent service = new Intent(this, LocationTrackingService.class);
 		locationTrackingService = PendingIntent.getService(this, 0, service, 0);
 
-		final long interval = DateUtils.SECOND_IN_MILLIS * componentManager.getTime();
+		final TimeInterval interval = componentManager.getTimeInterval();
 		final long firstStart = System.currentTimeMillis();
 
-		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval,
+		alarmManager.setInexactRepeating(AlarmManager.RTC, firstStart, interval.getTime(),
 				locationTrackingService);
 
-		Log.d("mobileroutetracker", "LocationTrackingService with interval " + interval + " started");
+		Log.d("mobileroutetracker", "LocationTrackingService with interval " + interval
+				+ " started");
 	}
 
 	private void stopSendingService() {
